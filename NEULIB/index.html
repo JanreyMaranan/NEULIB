@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEU Library Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="toast-container" class="toast-hidden">
+        <span id="toast-text"></span>
+        <button class="toast-close" onclick="hideToast()">&times;</button>
+    </div>
+
+    <div class="header-main" id="main-header">
+        <div class="logo-container">
+            <img src="logo.png" alt="NEU Logo" class="logo-small">
+            <span class="portal-title">NEU Library Portal</span>
+        </div>
+        <button id="nav-staff-btn" class="btn-staff-login" onclick="showStaffLogin()">Admin/Staff Login</button>
+    </div>
+
+    <div id="login-container" class="login-card">
+        <h1>Welcome to NEU Library</h1>
+        <div class="input-box"><i class="fas fa-envelope"></i><input type="email" id="v-email" placeholder="Institutional Email"></div>
+        <div class="input-box"><i class="fas fa-user"></i><input type="text" id="v-name" placeholder="Full Name"></div>
+        <div class="input-box"><i class="fas fa-graduation-cap"></i><input type="text" id="v-program" placeholder="Program (e.g., BSCS)"></div>
+        <div class="input-box">
+            <i class="fas fa-tasks"></i>
+            <select id="v-reason">
+                <option value="" disabled selected>Reason for Visit</option>
+                <option value="Reading">Reading</option>
+                <option value="Researching">Researching</option>
+                <option value="Computer Use">Computer Use</option>
+                <option value="Meeting">Meeting</option>
+            </select>
+        </div>
+        <button class="btn-main" onclick="processEntry()">CHECK IN / OUT</button>
+    </div>
+
+    <div id="staff-login-container" class="login-card hidden">
+        <h1>Staff Login</h1>
+        <div class="input-box">
+            <i class="fas fa-user-shield"></i>
+            <input type="email" id="admin-email" placeholder="Admin Email">
+        </div>
+        <div class="input-box">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="admin-password" placeholder="Password">
+            <i class="fas fa-eye toggle-password" id="eye-icon" onclick="togglePasswordVisibility()"></i>
+        </div>
+        <button class="btn-main" onclick="handleAdminLogin()">LOGIN TO DASHBOARD</button>
+        
+        <p class="login-hint">
+            <strong>Demo Admin:</strong> admin2@neu.edu.ph <br>
+            <strong>Password:</strong> staff_password123
+        </p>
+
+        <button class="btn-text-link" onclick="showVisitorLogin()">Back to Visitor Check-in</button>
+    </div>
+
+    <div id="admin-container" class="admin-card hidden">
+        <div class="admin-header-row">
+            <div>
+                <h2>Admin Management</h2>
+                <p class="last-access-text">Last Access: <span id="last-login-time" style="color: #006400; font-weight: bold;"></span></p>
+            </div>
+            <div class="header-actions">
+                <button class="btn-danger" onclick="clearAllLogs()">Clear Logs</button>
+                <button class="btn-secondary" onclick="exportPDF()">PDF Report</button>
+                <button class="btn-secondary" onclick="location.reload()">Logout</button>
+            </div>
+        </div>
+
+        <div class="tab-container">
+            <button id="tab-logs" class="tab-btn active" onclick="switchTab('logs')">Visitor Logs</button>
+            <button id="tab-blocked" class="tab-btn" onclick="switchTab('blocked')">Blocked Users</button>
+        </div>
+
+        <div class="filter-row">
+            <div class="filter-group">
+                <button class="filter-btn active" id="f-today" onclick="setDateFilter('today')">Today</button>
+                <button class="filter-btn" id="f-week" onclick="setDateFilter('week')">This Week</button>
+                <button class="filter-btn" id="f-range" onclick="setDateFilter('range')">Custom Range</button>
+            </div>
+            <div id="custom-date-inputs" class="hidden">
+                <input type="date" id="start-date" onchange="fetchData()">
+                <span>to</span>
+                <input type="date" id="end-date" onchange="fetchData()">
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-box"><span>ACTIVE INSIDE</span><h3 id="s-active">0</h3></div>
+            <div class="stat-box"><span>TOTAL ENTRIES</span><h3 id="s-total">0</h3></div>
+            <div class="stat-box"><span>BLOCKED USERS</span><h3 id="s-blocked">0</h3></div>
+        </div>
+
+        <div id="view-logs">
+            <div class="search-bar"><input type="text" id="search" placeholder="Search by name..." onkeyup="renderTable()"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>VISITOR</th><th>PROGRAM</th><th>REASON</th><th>IN</th><th>OUT</th><th>DATE</th><th>STATUS</th><th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+
+        <div id="view-blocked" class="hidden">
+            <table>
+                <thead>
+                    <tr>
+                        <th>EMAIL ADDRESS</th><th>BLOCK REASON</th><th>DATE BLOCKED</th><th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="blocked-table-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
