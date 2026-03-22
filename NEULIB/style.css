@@ -1,0 +1,259 @@
+:root {
+    --primary: #2d3436;
+    --accent: #0984e3;
+    --danger: #d63031;
+    --success: #00b894;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+    height: 100vh; font-family: 'Inter', sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('477579626_122108352272743934_80451274266931311_n.jpg');
+    background-size: cover; background-position: center;
+    display: flex; justify-content: center; align-items: center;
+}
+
+.glass-panel { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); border-radius: 20px; padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+.hidden { display: none !important; }
+
+/* FORMAL LOGIN */
+.auth-card { width: 400px; text-align: center; }
+.neu-logo-formal { width: 100px; margin-bottom: 20px; }
+.portal-title { font-size: 26px; font-weight: 800; color: #222; }
+.portal-subtitle { font-size: 13px; color: #666; margin-bottom: 30px; }
+
+.auth-options-formal { display: flex; flex-direction: column; gap: 12px; }
+.auth-segment { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; text-align: left; }
+.auth-segment:hover { border-color: var(--accent); background: #fdfdfd; transform: translateY(-2px); }
+.auth-label { font-size: 9px; font-weight: 800; color: #aaa; letter-spacing: 1px; }
+.auth-role { font-size: 15px; font-weight: 600; color: #222; }
+
+/* VISITOR FORM */
+.visitor-card { width: 420px; text-align: center; }
+.formal-form { text-align: left; display: flex; flex-direction: column; gap: 15px; margin: 20px 0; }
+.form-segment { background: #f9f9f9; border: 1px solid #eee; border-radius: 12px; padding: 12px 15px; }
+.form-label { display: block; font-size: 10px; color: #888; text-transform: uppercase; font-weight: 800; margin-bottom: 5px; }
+.form-input { width: 100%; border: none; background: transparent; font-size: 15px; outline: none; }
+
+/* ADMIN DASHBOARD */
+.admin-dashboard { width: 95%; max-width: 1100px; height: 85vh; display: flex; flex-direction: column; }
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 15px; }
+.stat-card { background: white; padding: 15px; border-radius: 12px; border-left: 4px solid var(--accent); }
+.table-container { flex-grow: 1; overflow-y: auto; background: white; border-radius: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #f8f9fa; padding: 12px; text-align: left; position: sticky; top: 0; }
+td { padding: 12px; border-bottom: 1px solid #eee; }
+
+.btn-action { background: var(--primary); color: white; width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; }
+.btn-red-small { background: var(--danger); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+.btn-green-small { background: var(--success); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+.avatar-large { width: 70px; height: 70px; border-radius: 50%; border: 2px solid #ddd; margin-bottom: 10px; }
+
+/* FORMAL LOGO STYLING */
+.logo-wrapper {
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.neu-logo-formal {
+    width: auto;
+    max-width: 120px; /* Limits width so it doesn't overwhelm the card */
+    max-height: 120px; /* Ensures tall logos don't break the layout */
+    object-fit: contain;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); /* Adds a formal depth effect */
+}
+/* POPUP NOTIFICATION */
+.popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+.popup.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.popup.success {
+    background: var(--success); /* GREEN */
+}
+
+.popup.danger {
+    background: var(--danger); /* RED */
+}
+/* CLEAN SIGN OUT BUTTON */
+.btn-logout {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: #555;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-logout i {
+    margin-right: 6px;
+}
+
+.btn-logout:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--danger);
+    transform: translateY(-1px);
+}
+/* ADMIN HEADER */
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header-titles h1 {
+    font-size: 22px;
+}
+
+.admin-email {
+    font-size: 12px;
+    color: #888;
+    margin-top: 3px;
+}
+
+/* TABS (Activity Logs / Blocked List) */
+.tabs {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.tabs button {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.tabs button.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+.tabs button:hover {
+    border-color: var(--accent);
+}
+
+/* HEADER ACTION BUTTONS */
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-danger-ghost {
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--danger);
+    background: transparent;
+    color: var(--danger);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-danger-ghost:hover {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-icon {
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-icon:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+.table-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.search-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 8px 10px;
+    transition: 0.2s;
+}
+
+.search-box i {
+    color: #aaa;
+    margin-right: 8px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 13px;
+}
+
+.search-box:focus-within {
+    border-color: var(--accent);
+}
+
+/* DATE FILTER */
+.date-input {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    background: #fff;
+    transition: 0.2s;
+}
+
+.date-input:hover {
+    border-color: var(--accent);
+}
+
+.date-input:focus {
+    border-color: var(--accent);
+    outline: none;
+}
+.stat-card span {
+    font-size: 12px;
+    color: #888;
+}
+
+.stat-card h3 {
+    font-size: 20px;
+    margin-top: 5px;
+}

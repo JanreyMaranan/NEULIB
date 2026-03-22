@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEU Library Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+   <div id="selection-container" class="glass-panel auth-card">
+    <div class="logo-wrapper">
+        <img src="logo.png" alt="NEU Logo" class="neu-logo-formal">
+    </div>
+    <h1 class="portal-title">Library Portal</h1>
+    <p class="portal-subtitle">Secure Access Management System</p>
+    
+    <div class="auth-options-formal">
+        <div class="auth-segment" onclick="handleAuth('visitor')">
+            <div class="auth-icon"><i class="fab fa-google"></i></div>
+            <div class="auth-text">
+                <span class="auth-label">SIGN-IN AS</span>
+                <span class="auth-role">Library Visitor</span>
+            </div>
+        </div>
+        <div class="auth-segment" onclick="handleAuth('admin')">
+            <div class="auth-icon"><i class="fas fa-user-shield"></i></div>
+            <div class="auth-text">
+                <span class="auth-label">LOGIN AS</span>
+                <span class="auth-role">Staff / Admin</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div id="visitor-form-container" class="glass-panel visitor-card hidden">
+        <div class="profile-header">
+            <img id="v-avatar" src="" class="avatar-large">
+            <h2 id="v-display-name">Welcome!</h2>
+            <p id="v-email-text" class="sub-text"></p>
+        </div>
+        <div class="formal-form">
+            <div class="form-segment">
+                <label class="form-label">Academic Program</label>
+                <select id="v-program" class="form-input">
+                    <option value="" disabled selected>Select your program</option>
+                    <option value="BSIT">BS Information Technology</option>
+                    <option value="BSCS">BS Computer Science</option>
+                    <option value="Other">Other Program</option>
+                </select>
+            </div>
+            <div class="form-segment">
+                <label class="form-label">Purpose of Visit</label>
+                <select id="v-reason" class="form-input">
+                    <option value="" disabled selected>Select reason</option>
+                    <option value="Reading">Self-Study / Reading</option>
+                    <option value="Research">Academic Research</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-action" onclick="processVisit()">Check-In / Check-Out</button>
+       <button class="btn-logout" onclick="handleLogout()">
+    <i class="fas fa-sign-out-alt"></i> Sign Out
+</button>
+    </div>
+
+    <div id="admin-container" class="glass-panel admin-dashboard hidden">
+        <header class="dash-header">
+            <div class="header-titles">
+                <h1>Admin Management</h1>
+<p id="admin-email" class="admin-email"></p>
+                <div class="tabs">
+                    <button id="tab-logs" class="active" onclick="switchTab('logs')">Activity Logs</button>
+                    <button id="tab-blocked" onclick="switchTab('blocked')">Blocked List</button>
+                </div>
+            </div>
+           <div class="header-actions">
+    <button class="btn-danger-ghost" onclick="clearLogs()">Clear Logs</button>
+
+    <!-- ✅ NEW PDF BUTTON -->
+    <button class="btn-icon" onclick="generatePDF()">
+        <i class="fas fa-file-pdf"></i>
+    </button>
+
+    <button class="btn-icon" onclick="handleLogout()">
+        <i class="fas fa-sign-out-alt"></i>
+    </button>
+</div>
+        </header>
+
+        <div class="stats-row">
+            <div class="stat-card"><span>Inside</span><h3 id="count-in">0</h3></div>
+            <div class="stat-card"><span>Today</span><h3 id="count-today">0</h3></div>
+            <div class="stat-card border-red"><span>Blocked</span><h3 id="count-blocked">0</h3></div>
+        </div>
+
+        <div class="table-controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+            <input type="text" id="admin-search" placeholder="Search..." onkeyup="handleSearch()">
+            </div>
+            <input type="date" id="admin-date-filter" class="date-input" onchange="filterTable()">
+        </div>
+
+        <div id="view-logs" class="table-container">
+            <!-- ✅ BLOCKED LIST TABLE -->
+<div id="view-blocked" class="table-container hidden">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Reason</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="blocked-body"></tbody>
+    </table>
+</div>
+            <table>
+                <thead>
+                    <tr><th>Visitor</th><th>Program</th><th>Date</th><th>In</th><th>Out</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="log-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
